@@ -1,9 +1,11 @@
 import './App.css';
+import Form from './Form';
 
 function App() {
 	return (
 		<div className='App'>
-			<h1>Hello World</h1>
+			<h1>PokePast Converter</h1>
+			<Form />
 		</div>
 	);
 }
