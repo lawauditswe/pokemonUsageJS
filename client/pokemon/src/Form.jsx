@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.css';
 import axios from 'axios';
 
 const Form = () => {
@@ -142,13 +143,15 @@ const Form = () => {
 		<div>
 			<form onSubmit={handleSubmit}>
 				<label>
-					Enter your PokePast:
+					<div className='title'>Enter your PokePast:</div>
 					<input
+						className='pasteInput'
 						type='text'
 						value={pokePast}
 						onChange={(e) => setPokePast(e.target.value)}
 					/>
 				</label>
+				<br />
 				<input type='submit' />
 			</form>
 			<br />
@@ -160,9 +163,9 @@ const Form = () => {
 				<br />
 				{result &&
 					result.map((arrayElement) => (
-						<div key={arrayElement[0]}>
+						<div className='pokemonList' key={arrayElement[0]}>
 							{/* <br /> */}
-							{arrayElement[0]}: {arrayElement[1]}
+							{arrayElement[0]} x{arrayElement[1]}
 						</div>
 					))}
 			</div>
