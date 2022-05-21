@@ -1,38 +1,43 @@
 .App {
-  text-align: center;
+	text-align: center;
+	font-family: Sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.title {
+	font-family: Sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.pasteInput {
+	height: 200px;
+	width: 80%;
+	font-size: 14pt;
+	box-sizing: border-box;
+	background-color: var(--superlight);
+	-ms-overflow-style: none; /* for Internet Explorer, Edge */
+	scrollbar-width: none; /* for Firefox */
+	overflow-y: scroll;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* .pokemonList {
+	text-align: left;
+} */
+
+.submitButton {
+	font: 20px 'Hurme Geometric Sans No.3';
+	border-radius: 15px;
+	border: none;
+	margin-top: 10px;
+	height: 75px;
+	width: fit-content;
+	padding-left: 5%;
+	padding-right: 5%;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.submitButton:hover {
+	background-color: lightblue;
+	cursor: pointer;
+	text-decoration: underline;
+	color: green;
+	transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
 }
