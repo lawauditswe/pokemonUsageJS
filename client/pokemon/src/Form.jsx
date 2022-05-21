@@ -6,12 +6,13 @@ const Form = () => {
 	const [pokePast, setPokePast] = useState('');
 	const [result, setResult] = useState('');
 	const [linksArr, setLinksArr] = useState([]);
+	const [numberOfPokemon, setNumberOfPokemon] = useState(0);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		console.log('PokePast submitted.');
 		pokePastFunctionality(pokePast);
-		// call function which gets the url of every Pokemon from the PokemonAPI based on sortedPokemon[0] which is the 0th index i.e. the Pokemon name
+
 		// sprites(sortedPokemonArr);
 	};
 
@@ -19,8 +20,8 @@ const Form = () => {
 		const pokemonObj = {};
 		let pokePastString = paste;
 		let result = pokePastString.split(' ');
-		// console.log('Result: ');
-		// console.log(result);
+		console.log('Result: ');
+		console.log(result);
 
 		let arr = [];
 		let emptyStringCount = 0;
@@ -99,10 +100,26 @@ const Form = () => {
 			spriteLinks.push(
 				`https://pokeapi.co/api/v2/pokemon/${currPokemonString}`
 			);
-			console.log(spriteLinks);
-
-			setLinksArr(spriteLinks);
 		}
+
+		let totalPokemon = 0;
+		let pokemonQuantity = [];
+		for (let i = 0; i < sortedPokemonArr.length; i++) {
+			pokemonQuantity.push(sortedPokemonArr[i][1]);
+		}
+
+		for (let j = 0; j < pokemonQuantity.length; j++) {
+			totalPokemon += pokemonQuantity[j];
+		}
+		console.log(`Total Pokemon: ${totalPokemon}`);
+		setNumberOfPokemon(totalPokemon);
+		// console.log(`Total Pokemon: ${totalPokemon}`);
+		// console.log(`sortedPokemonArr: ${sortedPokemonArr}`);
+		// console.log(`This is spriteLinks: ${spriteLinks}`);
+		// console.log(spriteLinks.length);
+		// setLinksArr(spriteLinks);
+		// console.log(typeof spriteLinks); // object
+		// console.log(`This is the linksArr: ${linksArr}`);
 
 		// console.log(`Result within pokePastFunctionality function: ${result}`);
 		// console.log(`Sorted Pokemon Array: ${sortedPokemonArr}`);
@@ -138,6 +155,9 @@ const Form = () => {
 			<br />
 			<h3>Pokemon Usage:</h3>
 			<div>
+				Total Pokemon: {numberOfPokemon}
+				<br />
+				<br />
 				{result &&
 					result.map((arrayElement) => (
 						<div key={arrayElement[0]}>
