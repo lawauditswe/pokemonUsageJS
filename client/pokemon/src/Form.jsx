@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Form = () => {
 	let sortedPokemonArr;
 	const [pokePast, setPokePast] = useState('');
 	const [result, setResult] = useState('');
+	const [linksArr, setLinksArr] = useState([]);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		console.log('PokePast submitted.');
-		return pokePastFunctionality(pokePast);
+		pokePastFunctionality(pokePast);
+		// call function which gets the url of every Pokemon from the PokemonAPI based on sortedPokemon[0] which is the 0th index i.e. the Pokemon name
+		// sprites(sortedPokemonArr);
 	};
 
 	const pokePastFunctionality = (paste) => {
@@ -46,7 +50,12 @@ const Form = () => {
 					result[i] !== '[gen8ou]'
 				) {
 					currString += result[i];
-					if (result[i + 1] && result[i + 1] !== '') {
+					if (
+						result[i + 1] &&
+						result[i + 1] !== '' &&
+						result[i + 1] !== '(M)' &&
+						result[i + 1] !== '(F)'
+					) {
 						currString += ' ';
 						currString += result[i + 1];
 					}
@@ -71,9 +80,46 @@ const Form = () => {
 		// console.log(Object.keys(pokemonObj));
 
 		sortedPokemonArr = Object.entries(pokemonObj).sort((a, b) => b[1] - a[1]);
-		console.log(sortedPokemonArr);
+		// console.log(sortedPokemonArr);
 		setResult(sortedPokemonArr);
+
+		const spriteLinks = [];
+		for (let i = 0; i < sortedPokemonArr.length; i++) {
+			// console.log(sortedPokemonArr[i]);
+			let currPokemonString = sortedPokemonArr[i][0];
+			for (let j = 0; j < currPokemonString.length; j++) {
+				if (currPokemonString[j] === ' ') {
+					currPokemonString =
+						currPokemonString.slice(0, j) +
+						'-' +
+						currPokemonString.slice(j + 1);
+				}
+				currPokemonString = currPokemonString.toLowerCase();
+			}
+			spriteLinks.push(
+				`https://pokeapi.co/api/v2/pokemon/${currPokemonString}`
+			);
+			console.log(spriteLinks);
+
+			setLinksArr(spriteLinks);
+		}
+
+		// console.log(`Result within pokePastFunctionality function: ${result}`);
+		// console.log(`Sorted Pokemon Array: ${sortedPokemonArr}`);
+		// console.log(`Type of result: ${typeof result}`);
+		// console.log(`Type of sortedPokemonArr: ${typeof sortedPokemonArr}`);
 	};
+
+	// const sprites = (pokemonArr) => {
+	// 	const spriteLinks = [];
+	// 	console.log('This is the console log within the sprites function.');
+	// 	console.log(pokemonArr);
+	// 	for (let i = 0; i < pokemonArr.length; i++) {
+	// 		spriteLinks.push(`https://pokeapi.co/api/v2/pokemon/${result[i][0]}`);
+	// 	}
+	// 	setLinksArr(spriteLinks);
+	// 	console.log(spriteLinks);
+	// };
 
 	return (
 		<div>
@@ -90,11 +136,12 @@ const Form = () => {
 			</form>
 			<br />
 			<br />
-			This is your sorted Pokemon Object:
+			<h3>Pokemon Usage:</h3>
 			<div>
 				{result &&
 					result.map((arrayElement) => (
 						<div key={arrayElement[0]}>
+							{/* <br /> */}
 							{arrayElement[0]}: {arrayElement[1]}
 						</div>
 					))}
