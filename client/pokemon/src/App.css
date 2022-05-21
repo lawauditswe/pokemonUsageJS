@@ -11,10 +11,33 @@
 	height: 200px;
 	width: 80%;
 	font-size: 14pt;
-	padding: 5px;
-	overflow: hidden;
+	box-sizing: border-box;
+	background-color: var(--superlight);
+	-ms-overflow-style: none; /* for Internet Explorer, Edge */
+	scrollbar-width: none; /* for Firefox */
+	overflow-y: scroll;
 }
 
-.pokemonList {
+/* .pokemonList {
 	text-align: left;
+} */
+
+.submitButton {
+	font: 20px 'Hurme Geometric Sans No.3';
+	border-radius: 15px;
+	border: none;
+	margin-top: 10px;
+	height: 75px;
+	width: fit-content;
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+.submitButton:hover {
+	background-color: lightblue;
+	cursor: pointer;
+	text-decoration: underline;
+	color: green;
+	transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
 }

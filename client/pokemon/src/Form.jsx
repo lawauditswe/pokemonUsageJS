@@ -152,7 +152,11 @@ const Form = () => {
 					/>
 				</label>
 				<br />
-				<input type='submit' />
+				<input
+					className='submitButton'
+					type='submit'
+					value='Submit your PokePast'
+				/>
 			</form>
 			<br />
 			<br />
