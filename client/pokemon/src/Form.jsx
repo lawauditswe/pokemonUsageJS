@@ -26,39 +26,77 @@ const Form = () => {
 		console.log(result);
 
 		let arr = [];
-		let emptyStringCount = 0;
-		let tripleEqualCount = 0;
-		let atCount = 0;
+
+		// BELOW LINES ARE NEW FUNCTIONALITY
+		let atSymbolSeen = false;
+		let atIndex;
 
 		for (let i = 0; i < result.length; i++) {
 			let currString = '';
-			let currIndex = result[i];
-			// NEW FUNCTIONALITY
-			// For if pokemon has items
-			if (currIndex === '@') {
-				if (result[i - 2] !== '' && result[i - 2] !== '===') {
-					currString += result[i - 2] + ' ';
+			if (result[i] === '@') {
+				atSymbolSeen = true;
+				atIndex = i;
+			}
+			if (result[i] === 'Ability:') {
+				if (atSymbolSeen) {
+					if (
+						result[atIndex - 2] &&
+						result[atIndex - 2] !== '' &&
+						result[atIndex - 2] !== '==='
+					) {
+						currString += result[atIndex - 2] + ' ';
+					}
+					currString += result[atIndex - 1];
+					atSymbolSeen = false;
+					atIndex = null;
+				} else {
+					if (
+						result[i - 4] &&
+						result[i - 4] !== '' &&
+						result[i - 4] !== '==='
+					) {
+						currString += result[i - 4] + ' ';
+					}
+					currString += result[i - 3];
 				}
-				currString += result[i - 1];
-				arr.push(currString);
-				atCount++;
-
-				// If pokemon does not have items
-			} else if (atCount === 0 && currIndex === 'Ability:') {
-				let ignoredStrings = ['', '===', '(M)', '(F)'];
-				if (
-					!ignoredStrings.includes(result[i - 5]) &&
-					result[i - 4] !== '==='
-				) {
-					currString += result[i - 5];
-				}
-				if (!ignoredStrings.includes(result[i - 4])) {
-					currString += result[i - 4] + ' ';
-				}
-				currString += result[i - 3];
 				arr.push(currString);
 			}
 		}
+
+		// BELOW LINES ARE ORIGINAL FUNCTIONALITY
+		// let emptyStringCount = 0;
+		// let tripleEqualCount = 0;
+		// let atCount = 0;
+
+		// for (let i = 0; i < result.length; i++) {
+		// 	let currString = '';
+		// 	let currIndex = result[i];
+		// 	// NEW FUNCTIONALITY
+		// 	// For if pokemon has items
+		// 	if (currIndex === '@') {
+		// 		if (result[i - 2] !== '' && result[i - 2] !== '===') {
+		// 			currString += result[i - 2] + ' ';
+		// 		}
+		// 		currString += result[i - 1];
+		// 		arr.push(currString);
+		// 		atCount++;
+
+		// 		// If pokemon does not have items
+		// 	} else if (atCount === 0 && currIndex === 'Ability:') {
+		// 		let ignoredStrings = ['', '===', '(M)', '(F)'];
+		// 		if (
+		// 			!ignoredStrings.includes(result[i - 5]) &&
+		// 			result[i - 4] !== '==='
+		// 		) {
+		// 			currString += result[i - 5];
+		// 		}
+		// 		if (!ignoredStrings.includes(result[i - 4])) {
+		// 			currString += result[i - 4] + ' ';
+		// 		}
+		// 		currString += result[i - 3];
+		// 		arr.push(currString);
+		// 	}
+		// }
 
 		console.log(`Arr: ${arr}`);
 
