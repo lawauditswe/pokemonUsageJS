@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import axios from 'axios';
+
+// import axios from 'axios';
 
 const Form = () => {
 	let sortedPokemonArr;
@@ -27,48 +28,39 @@ const Form = () => {
 		let arr = [];
 		let emptyStringCount = 0;
 		let tripleEqualCount = 0;
+		let atCount = 0;
 
 		for (let i = 0; i < result.length; i++) {
 			let currString = '';
-			if (result[i] === '===' || result[i] === '') {
-				if (result[i] === '===') {
-					tripleEqualCount++;
-				} else {
-					emptyStringCount++;
+			let currIndex = result[i];
+			// NEW FUNCTIONALITY
+			// For if pokemon has items
+			if (currIndex === '@') {
+				if (result[i - 2] !== '' && result[i - 2] !== '===') {
+					currString += result[i - 2] + ' ';
 				}
-			} else if (tripleEqualCount === 2) {
-				currString += result[i];
-				if (result[i + 1] && result[i + 1] !== '') {
-					currString += ' ';
-					currString += result[i + 1];
-				}
+				currString += result[i - 1];
 				arr.push(currString);
-				tripleEqualCount = 0;
-				emptyStringCount = 0;
-			} else if (emptyStringCount === 5) {
+				atCount++;
+
+				// If pokemon does not have items
+			} else if (atCount === 0 && currIndex === 'Ability:') {
+				let ignoredStrings = ['', '===', '(M)', '(F)'];
 				if (
-					result[i] !== '===' &&
-					result[i] !== '[gen8]' &&
-					result[i] !== '[gen8ou]'
+					!ignoredStrings.includes(result[i - 5]) &&
+					result[i - 4] !== '==='
 				) {
-					currString += result[i];
-					if (
-						result[i + 1] &&
-						result[i + 1] !== '' &&
-						result[i + 1] !== '(M)' &&
-						result[i + 1] !== '(F)'
-					) {
-						currString += ' ';
-						currString += result[i + 1];
-					}
-					arr.push(currString);
-					emptyStringCount = 0;
-				} else {
-					tripleEqualCount = 1;
-					emptyStringCount = 0;
+					currString += result[i - 5];
 				}
+				if (!ignoredStrings.includes(result[i - 4])) {
+					currString += result[i - 4] + ' ';
+				}
+				currString += result[i - 3];
+				arr.push(currString);
 			}
 		}
+
+		console.log(`Arr: ${arr}`);
 
 		for (let j = 0; j < arr.length; j++) {
 			if (!pokemonObj[arr[j]]) {
@@ -114,18 +106,6 @@ const Form = () => {
 		}
 		console.log(`Total Pokemon: ${totalPokemon}`);
 		setNumberOfPokemon(totalPokemon);
-		// console.log(`Total Pokemon: ${totalPokemon}`);
-		// console.log(`sortedPokemonArr: ${sortedPokemonArr}`);
-		// console.log(`This is spriteLinks: ${spriteLinks}`);
-		// console.log(spriteLinks.length);
-		// setLinksArr(spriteLinks);
-		// console.log(typeof spriteLinks); // object
-		// console.log(`This is the linksArr: ${linksArr}`);
-
-		// console.log(`Result within pokePastFunctionality function: ${result}`);
-		// console.log(`Sorted Pokemon Array: ${sortedPokemonArr}`);
-		// console.log(`Type of result: ${typeof result}`);
-		// console.log(`Type of sortedPokemonArr: ${typeof sortedPokemonArr}`);
 	};
 
 	// const sprites = (pokemonArr) => {
@@ -133,7 +113,7 @@ const Form = () => {
 	// 	console.log('This is the console log within the sprites function.');
 	// 	console.log(pokemonArr);
 	// 	for (let i = 0; i < pokemonArr.length; i++) {
-	// 		spriteLinks.push(`https://pokeapi.co/api/v2/pokemon/${result[i][0]}`);
+	// 		spriteLinks.push(`https://pokeapi.co/api/v2/pokemon/${currIndex[0]}`);
 	// 	}
 	// 	setLinksArr(spriteLinks);
 	// 	console.log(spriteLinks);
