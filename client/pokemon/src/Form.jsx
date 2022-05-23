@@ -183,13 +183,19 @@ const Form = () => {
 				Total Pokemon: {numberOfPokemon}
 				<br />
 				<br />
-				{result &&
-					result.map((arrayElement) => (
-						<div className='pokemonList' key={arrayElement[0]}>
-							{/* <br /> */}
-							{arrayElement[0]} x{arrayElement[1]}
-						</div>
-					))}
+				{/* <div className='gridContainer'>
+					<div>1</div>
+					<div>2</div>
+				</div> */}
+				<div className='gridContainer'>
+					{result &&
+						result.map((arrayElement) => (
+							<div key={arrayElement[0]}>
+								{/* <br /> */}
+								{arrayElement[0]} x{arrayElement[1]}
+							</div>
+						))}
+				</div>
 			</div>
 		</div>
 	);
