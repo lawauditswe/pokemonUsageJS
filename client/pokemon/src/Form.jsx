@@ -15,7 +15,7 @@ const Form = () => {
 		console.log('PokePast submitted.');
 		pokePastFunctionality(pokePast);
 
-		// sprites(sortedPokemonArr);
+		sprites(sortedPokemonArr);
 	};
 
 	const pokePastFunctionality = (paste) => {
@@ -40,63 +40,64 @@ const Form = () => {
 			if (result[i] === 'Ability:') {
 				if (atSymbolSeen) {
 					if (
+						result[atIndex - 3] &&
+						result[atIndex - 3] !== '' &&
+						result[atIndex - 3] !== '===' &&
+						result[atIndex - 3] !== '(M)' &&
+						result[atIndex - 3] !== '(F)'
+					) {
+						currString += result[atIndex - 3] + ' ';
+					}
+					if (
 						result[atIndex - 2] &&
 						result[atIndex - 2] !== '' &&
-						result[atIndex - 2] !== '==='
+						result[atIndex - 2] !== '===' &&
+						result[atIndex - 2] !== '(M)' &&
+						result[atIndex - 2] !== '(F)'
 					) {
 						currString += result[atIndex - 2] + ' ';
 					}
-					currString += result[atIndex - 1];
+					if (
+						result[atIndex - 1] &&
+						result[atIndex - 1] !== '(M)' &&
+						result[atIndex - 1] !== '(F)'
+					) {
+						currString += result[atIndex - 1];
+					}
 					atSymbolSeen = false;
 					atIndex = null;
 				} else {
 					if (
+						result[i - 5] &&
+						result[i - 5] !== '' &&
+						result[i - 5] !== '===' &&
+						result[i - 5] !== '(M)' &&
+						result[i - 5] !== '(F)'
+					) {
+						currString += result[i - 5] + ' ';
+					}
+					if (
 						result[i - 4] &&
 						result[i - 4] !== '' &&
-						result[i - 4] !== '==='
+						result[i - 4] !== '===' &&
+						result[i - 4] !== '(M)' &&
+						result[i - 4] !== '(F)'
 					) {
 						currString += result[i - 4] + ' ';
 					}
-					currString += result[i - 3];
+					if (
+						result[i - 3] &&
+						result[i - 3] !== '' &&
+						result[i - 3] !== '===' &&
+						result[i - 3] !== '(M)' &&
+						result[i - 3] !== '(F)'
+					) {
+						currString += result[i - 3];
+					}
 				}
 				arr.push(currString);
 			}
 		}
-
-		// BELOW LINES ARE ORIGINAL FUNCTIONALITY
-		// let emptyStringCount = 0;
-		// let tripleEqualCount = 0;
-		// let atCount = 0;
-
-		// for (let i = 0; i < result.length; i++) {
-		// 	let currString = '';
-		// 	let currIndex = result[i];
-		// 	// NEW FUNCTIONALITY
-		// 	// For if pokemon has items
-		// 	if (currIndex === '@') {
-		// 		if (result[i - 2] !== '' && result[i - 2] !== '===') {
-		// 			currString += result[i - 2] + ' ';
-		// 		}
-		// 		currString += result[i - 1];
-		// 		arr.push(currString);
-		// 		atCount++;
-
-		// 		// If pokemon does not have items
-		// 	} else if (atCount === 0 && currIndex === 'Ability:') {
-		// 		let ignoredStrings = ['', '===', '(M)', '(F)'];
-		// 		if (
-		// 			!ignoredStrings.includes(result[i - 5]) &&
-		// 			result[i - 4] !== '==='
-		// 		) {
-		// 			currString += result[i - 5];
-		// 		}
-		// 		if (!ignoredStrings.includes(result[i - 4])) {
-		// 			currString += result[i - 4] + ' ';
-		// 		}
-		// 		currString += result[i - 3];
-		// 		arr.push(currString);
-		// 	}
-		// }
 
 		console.log(`Arr: ${arr}`);
 
@@ -146,16 +147,16 @@ const Form = () => {
 		setNumberOfPokemon(totalPokemon);
 	};
 
-	// const sprites = (pokemonArr) => {
-	// 	const spriteLinks = [];
-	// 	console.log('This is the console log within the sprites function.');
-	// 	console.log(pokemonArr);
-	// 	for (let i = 0; i < pokemonArr.length; i++) {
-	// 		spriteLinks.push(`https://pokeapi.co/api/v2/pokemon/${currIndex[0]}`);
-	// 	}
-	// 	setLinksArr(spriteLinks);
-	// 	console.log(spriteLinks);
-	// };
+	const sprites = (pokemonArr) => {
+		const spriteLinks = [];
+		console.log('This is the console log within the sprites function.');
+		console.log(`pokemonArr: ${pokemonArr}`);
+		for (let i = 0; i < pokemonArr.length; i++) {
+			spriteLinks.push(`https://pokeapi.co/api/v2/pokemon/${pokemonArr[i][0]}`);
+		}
+		setLinksArr(spriteLinks);
+		console.log(spriteLinks);
+	};
 
 	return (
 		<div>
@@ -183,10 +184,6 @@ const Form = () => {
 				Total Pokemon: {numberOfPokemon}
 				<br />
 				<br />
-				{/* <div className='gridContainer'>
-					<div>1</div>
-					<div>2</div>
-				</div> */}
 				<div className='gridContainer'>
 					{result &&
 						result.map((arrayElement) => (
