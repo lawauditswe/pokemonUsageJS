@@ -116,23 +116,23 @@ const Form = () => {
 		// console.log(sortedPokemonArr);
 		setResult(sortedPokemonArr);
 
-		const spriteLinks = [];
-		for (let i = 0; i < sortedPokemonArr.length; i++) {
-			// console.log(sortedPokemonArr[i]);
-			let currPokemonString = sortedPokemonArr[i][0];
-			for (let j = 0; j < currPokemonString.length; j++) {
-				if (currPokemonString[j] === ' ') {
-					currPokemonString =
-						currPokemonString.slice(0, j) +
-						'-' +
-						currPokemonString.slice(j + 1);
-				}
-				currPokemonString = currPokemonString.toLowerCase();
-			}
-			spriteLinks.push(
-				`https://pokeapi.co/api/v2/pokemon/${currPokemonString}`
-			);
-		}
+		// const spriteLinks = [];
+		// for (let i = 0; i < sortedPokemonArr.length; i++) {
+		// 	// console.log(sortedPokemonArr[i]);
+		// 	let currPokemonString = sortedPokemonArr[i][0];
+		// 	for (let j = 0; j < currPokemonString.length; j++) {
+		// 		if (currPokemonString[j] === ' ') {
+		// 			currPokemonString =
+		// 				currPokemonString.slice(0, j) +
+		// 				'-' +
+		// 				currPokemonString.slice(j + 1);
+		// 		}
+		// 		currPokemonString = currPokemonString.toLowerCase();
+		// 	}
+		// 	spriteLinks.push(
+		// 		`https://pokeapi.co/api/v2/pokemon/${currPokemonString}`
+		// 	);
+		// }
 
 		let totalPokemon = 0;
 		let pokemonQuantity = [];
@@ -152,7 +152,14 @@ const Form = () => {
 		console.log('This is the console log within the sprites function.');
 		console.log(`pokemonArr: ${pokemonArr}`);
 		for (let i = 0; i < pokemonArr.length; i++) {
-			spriteLinks.push(`https://pokeapi.co/api/v2/pokemon/${pokemonArr[i][0]}`);
+			let currLink = `https://pokeapi.co/api/v2/pokemon/${pokemonArr[i][0]}`;
+			currLink = currLink.trim().toLowerCase();
+			for (let i = 0; i < currLink.length; i++) {
+				if (currLink[i] === ' ') {
+					currLink = currLink.slice(0, i) + '-' + currLink.slice(i + 1);
+				}
+			}
+			spriteLinks.push(currLink);
 		}
 		setLinksArr(spriteLinks);
 		console.log(spriteLinks);
