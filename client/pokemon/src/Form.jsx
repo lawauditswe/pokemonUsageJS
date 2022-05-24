@@ -114,7 +114,6 @@ const Form = () => {
 		for (let j = 0; j < pokemonQuantity.length; j++) {
 			totalPokemon += pokemonQuantity[j];
 		}
-		// console.log(`Total Pokemon: ${totalPokemon}`);
 		setNumberOfPokemon(totalPokemon);
 
 		// console.log(`Result array: ${result}`);
