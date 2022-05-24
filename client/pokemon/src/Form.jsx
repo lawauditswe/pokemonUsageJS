@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-
-// import axios from 'axios';
+import axios from 'axios';
 
 const Form = () => {
 	let sortedPokemonArr;
@@ -27,7 +26,6 @@ const Form = () => {
 
 		let arr = [];
 
-		// BELOW LINES ARE NEW FUNCTIONALITY
 		let atSymbolSeen = false;
 		let atIndex;
 
@@ -68,15 +66,6 @@ const Form = () => {
 					atIndex = null;
 				} else {
 					if (
-						result[i - 5] &&
-						result[i - 5] !== '' &&
-						result[i - 5] !== '===' &&
-						result[i - 5] !== '(M)' &&
-						result[i - 5] !== '(F)'
-					) {
-						currString += result[i - 5] + ' ';
-					}
-					if (
 						result[i - 4] &&
 						result[i - 4] !== '' &&
 						result[i - 4] !== '===' &&
@@ -116,24 +105,6 @@ const Form = () => {
 		// console.log(sortedPokemonArr);
 		setResult(sortedPokemonArr);
 
-		// const spriteLinks = [];
-		// for (let i = 0; i < sortedPokemonArr.length; i++) {
-		// 	// console.log(sortedPokemonArr[i]);
-		// 	let currPokemonString = sortedPokemonArr[i][0];
-		// 	for (let j = 0; j < currPokemonString.length; j++) {
-		// 		if (currPokemonString[j] === ' ') {
-		// 			currPokemonString =
-		// 				currPokemonString.slice(0, j) +
-		// 				'-' +
-		// 				currPokemonString.slice(j + 1);
-		// 		}
-		// 		currPokemonString = currPokemonString.toLowerCase();
-		// 	}
-		// 	spriteLinks.push(
-		// 		`https://pokeapi.co/api/v2/pokemon/${currPokemonString}`
-		// 	);
-		// }
-
 		let totalPokemon = 0;
 		let pokemonQuantity = [];
 		for (let i = 0; i < sortedPokemonArr.length; i++) {
@@ -161,8 +132,16 @@ const Form = () => {
 			}
 			spriteLinks.push(currLink);
 		}
-		setLinksArr(spriteLinks);
-		console.log(spriteLinks);
+		// setLinksArr(...linksArr, spriteLinks);
+		console.log(`Sprite links array: ${spriteLinks}`);
+		setLinksArr(...linksArr, spriteLinks);
+
+		// axios
+		// 	.get('https://pokeapi.co/api/v2/pokemon/landorus-therian')
+		// 	.then(console.log(data));
+
+		// https://pokeapi.co/api/v2/pokemon/landorus-therian
+		// `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${search}.png`;
 	};
 
 	return (
