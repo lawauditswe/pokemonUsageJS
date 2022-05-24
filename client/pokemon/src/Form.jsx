@@ -8,6 +8,7 @@ const Form = () => {
 	const [result, setResult] = useState('');
 	const [linksArr, setLinksArr] = useState([]);
 	const [numberOfPokemon, setNumberOfPokemon] = useState(0);
+	const [currSprite, setCurrSprite] = useState('');
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -118,7 +119,7 @@ const Form = () => {
 		setNumberOfPokemon(totalPokemon);
 	};
 
-	const sprites = (pokemonArr) => {
+	const sprites = async (pokemonArr) => {
 		const spriteLinks = [];
 		console.log('This is the console log within the sprites function.');
 		console.log(`pokemonArr: ${pokemonArr}`);
@@ -131,17 +132,23 @@ const Form = () => {
 				}
 			}
 			spriteLinks.push(currLink);
+			// setLinksArr(...linksArr, spriteLinks);
 		}
-		// setLinksArr(...linksArr, spriteLinks);
-		console.log(`Sprite links array: ${spriteLinks}`);
+
+		// console.log(linksArr);
+
 		setLinksArr(...linksArr, spriteLinks);
 
-		// axios
-		// 	.get('https://pokeapi.co/api/v2/pokemon/landorus-therian')
-		// 	.then(console.log(data));
+		console.log(`Links array length: ${linksArr.length}`);
 
-		// https://pokeapi.co/api/v2/pokemon/landorus-therian
-		// `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${search}.png`;
+		for (let i = 0; i < linksArr.length; i++) {
+			try {
+				const response = await axios.get(linksArr[i]);
+				await setCurrSprite(response.data.sprites.front_default);
+			} catch (err) {
+				console.log(err);
+			}
+		}
 	};
 
 	return (
@@ -174,7 +181,7 @@ const Form = () => {
 					{result &&
 						result.map((arrayElement) => (
 							<div key={arrayElement[0]}>
-								{/* <br /> */}
+								<img alt='' src={currSprite} />
 								{arrayElement[0]} x{arrayElement[1]}
 							</div>
 						))}
