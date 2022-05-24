@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
 import './App.css';
-import axios from 'axios';
 
 const Form = () => {
 	let sortedPokemonArr;
 	const [pokePast, setPokePast] = useState('');
 	const [result, setResult] = useState('');
-	const [linksArr, setLinksArr] = useState([]);
 	const [numberOfPokemon, setNumberOfPokemon] = useState(0);
-	const [currSprite, setCurrSprite] = useState('');
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		console.log('PokePast submitted.');
 		pokePastFunctionality(pokePast);
-
-		sprites(sortedPokemonArr);
 	};
 
 	const pokePastFunctionality = (paste) => {
@@ -89,7 +84,7 @@ const Form = () => {
 			}
 		}
 
-		console.log(`Arr: ${arr}`);
+		// console.log(`Arr: ${arr}`);
 
 		for (let j = 0; j < arr.length; j++) {
 			if (!pokemonObj[arr[j]]) {
@@ -99,56 +94,30 @@ const Form = () => {
 			}
 		}
 
-		// console.log(pokemonObj);
+		console.log(`Pokemon obj: ${JSON.stringify(pokemonObj)}`);
 		// console.log(Object.keys(pokemonObj));
 
 		sortedPokemonArr = Object.entries(pokemonObj).sort((a, b) => b[1] - a[1]);
-		// console.log(sortedPokemonArr);
+
+		// console.log(JSON.stringify(sortedPokemonArr));
+		console.log(`Sorted pokemon array: ${sortedPokemonArr}`);
 		setResult(sortedPokemonArr);
 
 		let totalPokemon = 0;
 		let pokemonQuantity = [];
 		for (let i = 0; i < sortedPokemonArr.length; i++) {
 			pokemonQuantity.push(sortedPokemonArr[i][1]);
+			if (sortedPokemonArr[i][0] === 'Urshifu-Rapid-Strike')
+				sortedPokemonArr[i][0] = 'Urshifu';
 		}
 
 		for (let j = 0; j < pokemonQuantity.length; j++) {
 			totalPokemon += pokemonQuantity[j];
 		}
-		console.log(`Total Pokemon: ${totalPokemon}`);
+		// console.log(`Total Pokemon: ${totalPokemon}`);
 		setNumberOfPokemon(totalPokemon);
-	};
 
-	const sprites = async (pokemonArr) => {
-		const spriteLinks = [];
-		console.log('This is the console log within the sprites function.');
-		console.log(`pokemonArr: ${pokemonArr}`);
-		for (let i = 0; i < pokemonArr.length; i++) {
-			let currLink = `https://pokeapi.co/api/v2/pokemon/${pokemonArr[i][0]}`;
-			currLink = currLink.trim().toLowerCase();
-			for (let i = 0; i < currLink.length; i++) {
-				if (currLink[i] === ' ') {
-					currLink = currLink.slice(0, i) + '-' + currLink.slice(i + 1);
-				}
-			}
-			spriteLinks.push(currLink);
-			// setLinksArr(...linksArr, spriteLinks);
-		}
-
-		// console.log(linksArr);
-
-		setLinksArr(...linksArr, spriteLinks);
-
-		console.log(`Links array length: ${linksArr.length}`);
-
-		for (let i = 0; i < linksArr.length; i++) {
-			try {
-				const response = await axios.get(linksArr[i]);
-				await setCurrSprite(response.data.sprites.front_default);
-			} catch (err) {
-				console.log(err);
-			}
-		}
+		// console.log(`Result array: ${result}`);
 	};
 
 	return (
@@ -181,8 +150,17 @@ const Form = () => {
 					{result &&
 						result.map((arrayElement) => (
 							<div key={arrayElement[0]}>
-								<img alt='' src={currSprite} />
-								{arrayElement[0]} x{arrayElement[1]}
+								<img
+									className='sprites'
+									alt=''
+									src={`https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/regular/${arrayElement[0]
+										.toLowerCase()
+										.trim()
+										.replace(' ', '-')}.png`}
+								/>
+								<div>
+									{arrayElement[0]} x{arrayElement[1]}
+								</div>
 							</div>
 						))}
 				</div>

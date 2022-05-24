@@ -18,10 +18,6 @@
 	overflow-y: scroll;
 }
 
-/* .pokemonList {
-	text-align: left;
-} */
-
 .submitButton {
 	font: 20px 'Hurme Geometric Sans No.3';
 	border-radius: 15px;
@@ -43,11 +39,12 @@
 }
 
 .gridContainer {
+	font-family: Arial, Helvetica, sans-serif;
 	background: #eee;
-	max-width: 900px;
+	max-width: 1800px;
 	margin: 0 auto;
 	display: grid;
-	grid-template-columns: 300px 300px 300px;
+	grid-template-columns: 300px 300px 300px 300px 300px 300px;
 }
 
 .gridContainer > div {
@@ -55,4 +52,13 @@
 	text-align: center;
 	padding: 20px;
 	border: 1px solid #777;
+}
+
+.sprites {
+	min-height: 100px;
+	min-width: 100px;
+}
+
+.cardText {
+	font-family: Helvetica;
 }
