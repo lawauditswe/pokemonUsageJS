@@ -107,8 +107,18 @@ const Form = () => {
 		let pokemonQuantity = [];
 		for (let i = 0; i < sortedPokemonArr.length; i++) {
 			pokemonQuantity.push(sortedPokemonArr[i][1]);
-			if (sortedPokemonArr[i][0] === 'Urshifu-Rapid-Strike')
+			if (sortedPokemonArr[i][0] === 'Urshifu-Rapid-Strike') {
 				sortedPokemonArr[i][0] = 'Urshifu';
+			}
+			if (sortedPokemonArr[i][0] === 'Necrozma-Dusk-Mane') {
+				sortedPokemonArr[i][0] = 'Necrozma-Dusk';
+			}
+			if (sortedPokemonArr[i][0] === 'Calyrex-Shadow') {
+				sortedPokemonArr[i][0] = 'Calyrex-Shadow-Rider';
+			}
+			if (sortedPokemonArr[i][0].includes('Zamazenta-Crowned')) {
+				sortedPokemonArr[i][0] = 'Zamazenta-Crowned';
+			}
 		}
 
 		for (let j = 0; j < pokemonQuantity.length; j++) {
