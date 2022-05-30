@@ -41,10 +41,10 @@
 .gridContainer {
 	font-family: Arial, Helvetica, sans-serif;
 	background: #eee;
-	max-width: 1800px;
+	max-width: 1750px;
 	margin: 0 auto;
 	display: grid;
-	grid-template-columns: 300px 300px 300px 300px 300px 300px;
+	grid-template-columns: 250px 250px 250px 250px 250px 250px 250px;
 }
 
 .gridContainer > div {
